@@ -1,1 +1,4 @@
 .vscode/
+.todo
+.env
+node_modules/

@@ -14,7 +14,7 @@ const ShowTime = sequelize.define("showTimes", {
         allowNull: false,
     },
     date: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     capacity: {

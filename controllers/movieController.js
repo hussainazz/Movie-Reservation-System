@@ -2,10 +2,10 @@ import Movie from "../models/movieModel.js";
 import Movies from "../models/movieModel.js";
 import AppError from "../utils/appError.js";
 
-let findMovie = async (id, next) => {
-    const movie = await Movie.findOne({ where: { movie_id: id } });
+export async function findMovie(movie_id) {
+    const movie = await Movie.findOne({ where: { movie_id } });
     if (movie === null) {
-        return next(new AppError("No movie with this id exists"), 404);
+        throw new AppError("No movie with this id exists", 404);
     }
     return movie;
 };
@@ -32,7 +32,7 @@ async function addMovie(req, res, next) {
 }
 
 async function deleteMovie(req, res, next) {
-    let movie = await findMovie(req.body.movie_id, next);
+    let movie = await findMovie(req.body.movie_id);
     await movie.destroy();
     res.json(`movie ${movie.movie_id} deleted`);
 }

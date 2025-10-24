@@ -1,21 +1,29 @@
 import Movie from "../models/movieModel.js";
 import Movies from "../models/movieModel.js";
 import AppError from "../utils/appError.js";
+import { retrieveShowTimes } from "../controllers/showTimeController.js"
 
-export async function findMovie(movie_id) {
+export async function findMovie(movie_id, showTime_id) {
     const movie = await Movie.findOne({ where: { movie_id } });
     if (movie === null) {
         throw new AppError("No movie with this id exists", 404);
     }
     return movie;
-};
+}
 
 async function retrieveMovies(req, res, next) {
-    if (req.query.id) {
-        const movie = findMovie(req.query.id);
+    const showTimesFilter = req.url.split("/")[2]
+    if(showTimesFilter) {
+        const showTimes = await retrieveShowTimes(req, res, next)
+        return res.status(200).json({
+            showTimes,
+        });
+    }
+    if (req.params.movieId && !showTimesFilter) {
+        let movie = findMovie(req.query.id);
         return res.json(movie);
     }
-    const movies = await Movies.findAll();
+    let movies = await Movies.findAll();
     res.json(movies);
 }
 

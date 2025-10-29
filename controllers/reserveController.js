@@ -3,7 +3,7 @@ import ShowTime from "../models/showTimeModel.js";
 import AppError from "../utils/appError.js";
 import { updateShowTimeReserves } from "./showTimeController.js";
 import { findShowTime } from "./showTimeController.js";
-import { isDateValid } from "../utils/dateValid.js";
+import { dateValid } from "../utils/dateValid.js";
 const { default: Seats } = await import("../seedTables/seats.json", {
     with: { type: "json" },
 });

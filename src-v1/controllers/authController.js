@@ -1,10 +1,10 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { configDotenv } from "dotenv";
+import dotenv from "dotenv";
 import AppError from "../utils/appError.js";
 
-configDotenv();
+dotenv.config({ path: "../.env"});
 
 let signToken = (userId) => {
     return jwt.sign({ userId }, process.env.JWT_SECRET, {
@@ -18,9 +18,9 @@ async function register(req, res, next) {
     let user;
     try {
         user = await User.create({ username, password });
-    } catch (e) { // ! handle invalid username
+    } catch (e) {
         throw new Error(e.original.detail);
-    } 
+    }
     const token = signToken(user.dataValues.user_id);
     res.cookie("token", token, { httpOnly: true });
     res.status(201).json({ status: "OK", message: "Signed up successfully." });

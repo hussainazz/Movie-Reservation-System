@@ -1,4 +1,4 @@
 .vscode/
-.todo
+src-v1/.todo
 .env
-node_modules/
+src-v1/node_modules/

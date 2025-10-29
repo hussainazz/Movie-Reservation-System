@@ -2,12 +2,12 @@
     "name": "movie-reservation",
     "version": "1.0.0",
     "description": "",
-    "main": "server.js",
+    "main": "src-v1/server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node server.js",
-        "dev": "node --inspect server.js",
-        "find-circular-deps": "madge . -c"
+        "start": "node src-v1/server.js",
+        "dev": "node --inspect src-v1/server.js",
+        "find-circular-deps": "madge src-v1 -c"
     },
     "keywords": [],
     "author": "",

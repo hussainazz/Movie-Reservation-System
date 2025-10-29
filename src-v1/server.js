@@ -7,8 +7,6 @@ import cookieParser from "cookie-parser";
 import { showTimeRouter } from "./routes/showTimeRoute.js";
 import { routeProtector } from "./controllers/authController.js";
 import { reserveRouter } from "./routes/reserveRoute.js";
-import UserReservations from "./models/reserveModel.js";
-import sequelize from "./sequelize_config.js";
 
 const app = express();
 app.listen(3000, () => console.log("LISTENING: ", 3000));

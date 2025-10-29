@@ -3,7 +3,7 @@ import ShowTime from "../models/showTimeModel.js";
 import AppError from "../utils/appError.js";
 import { updateShowTimeReserves } from "./showTimeController.js";
 import { findShowTime } from "./showTimeController.js";
-import { isDateValid } from "../utils/dateCheck.js";
+import { isDateValid } from "../utils/dateValid.js";
 const { default: Seats } = await import("../seedTables/seats.json", {
     with: { type: "json" },
 });
@@ -70,7 +70,7 @@ export async function isShowTimeOverdue(showTime) {
     try {
         await isDateValid(showTime.date);
     } catch {
-        throw new AppError("schedule of showTime has been passed", 404)
+        throw new AppError("schedule of showTime has been passed", 404);
     }
 }
 

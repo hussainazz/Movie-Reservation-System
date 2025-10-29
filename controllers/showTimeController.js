@@ -2,14 +2,15 @@ import ShowTime from "../models/showTimeModel.js";
 import AppError from "../utils/appError.js";
 import { isSeatAvailable } from "./reserveController.js";
 import { findMovie } from "./movieController.js";
-import { isDateValid } from "../utils/dateCheck.js";
+import { dateValid } from "../utils/dateValid.js";
+import { isTimeValid } from "../utils/timeValid.js";
 
 export async function retrieveShowTimes(req, res, next) {
     const dateFilter = req.query?.date;
     if (dateFilter) {
         let fullBookedShows = [];
         let availableShows = [];
-        await isDateValid(dateFilter);
+        await dateValid(dateFilter);
         const showTimes = await ShowTime.findAll({
             where: { date: dateFilter },
             attributes: { exclude: ["createdAt", "updatedAt"] },
@@ -95,17 +96,24 @@ export async function addShowTime(req, res, next) {
     try {
         let movie_id = req.body?.movie_id;
         let date = req.body?.date; // YYYY/DD/MM
+        let startTime = req.body?.startTime; // [HH:MM, HH:MM]
+        let endTime = req.body?.endTime;
         let capacity = req.body?.capacity;
 
         await findMovie(movie_id);
-        await isDateValid(date);
+        await dateValid(date);
+        await isTimeValid(startTime, endTime);
+        await timeOverlap(date, startTime, endTime);
+
         if (capacity > 204) {
-            throw `capacity could not be more that 204`;
+            throw `capacity could not be more than 204`;
         }
+
         await ShowTime.create({
             movie_id,
             date,
             capacity,
+            time: [startTime, endTime],
         });
 
         res.status(200).json({
@@ -124,5 +132,27 @@ export async function deleteShowTime(req, res, next) {
     res.status(200).json({
         status: "ok",
         msg: "show time deleted successfully.",
+    });
+}
+
+export async function timeOverlap(date, startTime, endTime) {
+    const showTimes = await ShowTime.findAll({ where: { date } });
+
+    if (showTimes === null) return;
+
+    showTimes.forEach((show) => {
+        let [startHour, endHour] = [
+            show.time[0].split(":")[0],
+            show.time[1].split(":")[0],
+        ];
+        const newStartHour = startTime.split(":")[0];
+        const newEndHour = endTime.split(":")[0];
+
+        if (
+            (newStartHour >= startHour && newStartHour <= endHour) ||
+            (newEndHour >= startHour && newEndHour <= endHour)
+        ) {
+            throw new AppError("this time is booked before.", 409);
+        }
     });
 }

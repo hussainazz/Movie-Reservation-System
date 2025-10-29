@@ -17,6 +17,10 @@ const ShowTime = sequelize.define("showTimes", {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    time: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        allowNull: false
+    },
     capacity: {
         type: DataTypes.INTEGER,
         allowNull: false,

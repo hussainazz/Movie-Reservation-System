@@ -7,3 +7,4 @@ node_modules
 .todo
 src-v2/prisma/generated
 jsconfig.json
+src-v2/dist/

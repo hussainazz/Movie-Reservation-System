@@ -1,6 +1,7 @@
-import AppError from "./appError.js";
+import AppError from "./appError.ts";
 
-export async function dateValid(date) {
+// /** @param {string} date @returns {boolean} */
+export async function isDateValid(date) {
   // YYYY-MM-DD
   const DATE_FORMAT_REGEX = /^\d{4}-\d{2}-\d{2}$/;
   const isFormatCorrect = DATE_FORMAT_REGEX.test(date);

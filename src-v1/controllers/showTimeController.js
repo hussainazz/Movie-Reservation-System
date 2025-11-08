@@ -5,6 +5,7 @@ import { findMovie } from "./movieController.js";
 import { dateValid } from "../utils/dateValid.js";
 import { isTimeValid } from "../utils/timeValid.js";
 
+export async function ret
 export async function retrieveShowTimes(req, res, next) {
     const dateFilter = req.query?.date;
     if (dateFilter) {

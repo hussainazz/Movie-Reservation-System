@@ -1,4 +1,11 @@
 .vscode/
-src-v1/.todo
 .env
-src-v1/node_modules/
+/backup.json
+/package.json
+/package-lock.json
+node_modules
+.todo
+src-v2/prisma/generated
+jsconfig.json
+src-v2/dist/
+  

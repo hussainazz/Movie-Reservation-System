@@ -1,0 +1,32 @@
+{
+    "name": "movie-reservation-v2",
+    "version": "1.0.0",
+    "type": "module",
+    "allowJs": "true",
+    "scripts": {
+        "dbpush": "npx dotenv -e ../.env -- npx prisma db push",
+        "start": "npx ts-node --esm --project tsconfig.json server.ts"
+    },
+    "prisma": {
+        "seed": "npx dotenv -e ../.env -- node ./prisma/seed.js"
+    },
+    "devDependencies": {
+        "@types/express": "^5.0.5",
+        "@types/node": "^24.10.0",
+        "dotenv-cli": "^11.0.0",
+        "prisma": "^6.18.0",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.9.3"
+    },
+    "dependencies": {
+        "@prisma/client": "^6.18.0",
+        "@types/bcrypt": "^6.0.0",
+        "@types/cookie-parser": "^1.4.10",
+        "@types/jsonwebtoken": "^9.0.10",
+        "bcrypt": "^6.0.0",
+        "cookie-parser": "^1.4.7",
+        "express": "^5.1.0",
+        "jsonwebtoken": "^9.0.2",
+        "nodemon": "^3.1.10"
+    }
+}
